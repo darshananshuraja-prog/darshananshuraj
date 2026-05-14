@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FORGE GYM — Train Hard. Live Strong.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Barlow+Condensed:wght@500;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #0a0a0a;
+      --dark: #111214;
+      --card: #16181c;
+      --border: #2a2d34;
+      --accent: #e8ff3a;
+      --accent2: #ff4d1c;
+      --white: #f0f0f0;
+      --muted: #7a7f8a;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-cond: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 70px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-cond);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent);
+      color: var(--black);
+      font-family: var(--font-cond);
+      font-weight: 900;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    }
+    .nav-cta:hover { background: #fff; transform: scale(1.04); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 6% 8%;
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 70% 40%, rgba(232,255,58,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,77,28,0.08) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(42,45,52,0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(42,45,52,0.3) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 1.5rem;
+      width: fit-content;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 14vw, 13rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      position: relative;
+      z-index: 1;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 500px;
+      margin-top: 1.5rem;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+    .btn-primary {
+      font-family: var(--font-cond);
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      padding: 1rem 2.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+    .btn-ghost {
+      font-family: var(--font-cond);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border);
+      padding: 1rem 2.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-stats {
+      position: absolute; right: 6%; bottom: 8%;
+      display: flex; flex-direction: column; gap: 2rem;
+      text-align: right;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-line {
+      position: absolute; top: 0; right: 30%;
+      width: 1px; height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--border) 30%, var(--border) 70%, transparent);
+      opacity: 0.4;
+    }
+
+    /* ─── SECTION COMMON ─── */
+    section { padding: 7rem 6%; }
+    .section-label {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1;
+      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.8;
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── CLASSES ─── */
+    #classes { background: var(--dark); }
+    .classes-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      flex-wrap: wrap; gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .classes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      background: var(--border);
+    }
+    .class-card {
+      background: var(--card);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+    .class-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .class-card:hover { background: #1c1f24; }
+    .class-card:hover::before { transform: scaleX(1); }
+    .class-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .class-name {
+      font-family: var(--font-cond);
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .class-level {
+      display: inline-block;
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .class-level.beginner { background: rgba(232,255,58,0.12); color: var(--accent); }
+    .class-level.intermediate { background: rgba(255,77,28,0.12); color: var(--accent2); }
+    .class-level.advanced { background: rgba(255,255,255,0.08); color: var(--white); }
+    .class-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .class-meta {
+      display: flex; gap: 1.5rem;
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .class-meta span::before { content: '· '; color: var(--accent); }
+
+    /* ─── TRAINERS ─── */
+    #trainers { background: var(--black); }
+    .trainers-header { margin-bottom: 4rem; }
+    .trainers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+    .trainer-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--card);
+    }
+    .trainer-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      background: var(--border);
+      position: relative;
+    }
+    .trainer-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      position: relative;
+    }
+    .trainer-photo-placeholder::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, var(--card) 100%);
+    }
+    .p1 { background: linear-gradient(135deg, #1a2a1a, #0d1a0d); }
+    .p2 { background: linear-gradient(135deg, #1a1a2a, #0d0d1a); }
+    .p3 { background: linear-gradient(135deg, #2a1a1a, #1a0d0d); }
+    .p4 { background: linear-gradient(135deg, #1a2a2a, #0d1a1a); }
+    .trainer-info { padding: 1.5rem; }
+    .trainer-name {
+      font-family: var(--font-cond);
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .trainer-role {
+      font-family: var(--font-cond);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+    .trainer-bio {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .trainer-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-top: 1rem;
+    }
+    .trainer-tag {
+      font-family: var(--font-cond);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.5rem;
+      color: var(--muted);
+    }
+
+    /* ─── PRICING ─── */
+    #pricing { background: var(--dark); }
+    .pricing-header { margin-bottom: 4rem; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+    }
+    .pricing-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .pricing-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .pricing-card.featured {
+      border-color: var(--accent);
+      background: #141600;
+    }
+    .featured-badge {
+      position: absolute; top: -13px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--black);
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.25rem 1rem;
+    }
+    .plan-name {
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .plan-price {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: var(--white);
+      line-height: 1;
+    }
+    .plan-price sup {
+      font-family: var(--font-cond);
+      font-size: 1.2rem;
+      vertical-align: super;
+      color: var(--muted);
+    }
+    .plan-price span {
+      font-family: var(--font-cond);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .plan-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 300;
+      margin: 1rem 0 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+    .plan-features li {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .plan-features li::before {
+      content: '→';
+      color: var(--accent);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .plan-features li.no { color: #444; }
+    .plan-features li.no::before { content: '—'; color: #333; }
+    .btn-plan {
+      display: block; width: 100%;
+      font-family: var(--font-cond);
+      font-weight: 900;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.9rem;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--white);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-plan:hover, .pricing-card.featured .btn-plan {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--black);
+    }
+    .pricing-card.featured .btn-plan:hover { background: #fff; border-color: #fff; }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--black); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 2.5rem; }
+    .contact-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .contact-icon {
+      font-size: 1.2rem;
+      padding-top: 0.15rem;
+      flex-shrink: 0;
+    }
+    .contact-item-label {
+      font-family: var(--font-cond);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+    .contact-item-value {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group label {
+      font-family: var(--font-cond);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding: 0.85rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .form-group select option { background: var(--card); }
+    .form-submit {
+      font-family: var(--font-cond);
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      padding: 1.1rem;
+      cursor: pointer;
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .form-submit:hover { background: #fff; transform: translateY(-2px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 3rem 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+    .footer-copy {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--muted);
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-tag    { animation: fadeUp 0.7s ease both; animation-delay: 0.1s; }
+    .hero-title  { animation: fadeUp 0.8s ease both; animation-delay: 0.25s; }
+    .hero-sub    { animation: fadeUp 0.8s ease both; animation-delay: 0.45s; }
+    .hero-actions { animation: fadeUp 0.8s ease both; animation-delay: 0.6s; }
+    .hero-stats  { animation: fadeUp 0.8s ease both; animation-delay: 0.7s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-stats { display: none; }
+      .hero-line { display: none; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 5rem 5%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">FORGE</div>
+  <ul class="nav-links">
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#trainers">Trainers</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Join Now</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-line"></div>
+
+  <div class="hero-tag">Est. 2018 · Downtown District</div>
+  <h1 class="hero-title">TRAIN<br><span>FORGE</span><br>REPEAT.</h1>
+  <p class="hero-sub">Built for athletes who refuse to settle. CrossFit-style programming, elite coaching, and a community that pushes you beyond your limits.</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-primary">Start Free Trial</a>
+    <a href="#classes" class="btn-ghost">View Classes</a>
+  </div>
+
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">1,200+</div>
+      <div class="stat-label">Active Members</div>
+    </div>
+    <div>
+      <div class="stat-num">18</div>
+      <div class="stat-label">Expert Trainers</div>
+    </div>
+    <div>
+      <div class="stat-num">30+</div>
+      <div class="stat-label">Weekly Classes</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLASSES -->
+<section id="classes">
+  <div class="classes-header">
+    <div>
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">OUR CLASSES</h2>
+      <p class="section-sub">From zero to hero — our programming covers every level and discipline.</p>
+    </div>
+    <a href="#contact" class="btn-ghost">Schedule a Class →</a>
+  </div>
+
+  <div class="classes-grid">
+    <div class="class-card">
+      <div class="class-icon">⚡</div>
+      <div class="class-name">MetCon</div>
+      <span class="class-level intermediate">Intermediate</span>
+      <p class="class-desc">High-intensity metabolic conditioning circuits designed to torch calories and build explosive endurance in 45 minutes.</p>
+      <div class="class-meta">
+        <span>45 min</span>
+        <span>Mon / Wed / Fri</span>
+        <span>Max 16</span>
+      </div>
+    </div>
+    <div class="class-card">
+      <div class="class-icon">🏋️</div>
+      <div class="class-name">Olympic Lifting</div>
+      <span class="class-level advanced">Advanced</span>
+      <p class="class-desc">Master the snatch and clean & jerk with expert coaching, building raw power and refined technique from the ground up.</p>
+      <div class="class-meta">
+        <span>60 min</span>
+        <span>Tue / Thu / Sat</span>
+        <span>Max 10</span>
+      </div>
+    </div>
+    <div class="class-card">
+      <div class="class-icon">🔥</div>
+      <div class="class-name">FORGE WOD</div>
+      <span class="class-level advanced">Advanced</span>
+      <p class="class-desc">Our signature Workout of the Day — constantly varied, functional movements performed at high intensity. No two days alike.</p>
+      <div class="class-meta">
+        <span>50 min</span>
+        <span>Daily 6AM / 7PM</span>
+        <span>Max 20</span>
+      </div>
+    </div>
+    <div class="class-card">
+      <div class="class-icon">🌱</div>
+      <div class="class-name">Foundations</div>
+      <span class="class-level beginner">Beginner</span>
+      <p class="class-desc">New to CrossFit? Build confidence and master fundamental movements in a supportive, structured environment built for beginners.</p>
+      <div class="class-meta">
+        <span>60 min</span>
+        <span>Mon / Wed / Sat</span>
+        <span>Max 8</span>
+      </div>
+    </div>
+    <div class="class-card">
+      <div class="class-icon">🧘</div>
+      <div class="class-name">Mobility & Recovery</div>
+      <span class="class-level beginner">All Levels</span>
+      <p class="class-desc">Improve flexibility, reduce injury risk, and accelerate recovery. Essential for any serious training programme.</p>
+      <div class="class-meta">
+        <span>45 min</span>
+        <span>Tue / Thu / Sun</span>
+        <span>Max 20</span>
+      </div>
+    </div>
+    <div class="class-card">
+      <div class="class-icon">🏃</div>
+      <div class="class-name">Endurance Run</div>
+      <span class="class-level intermediate">Intermediate</span>
+      <p class="class-desc">Structured aerobic conditioning combining running intervals, rowing, and assault bike — push your cardiovascular ceiling.</p>
+      <div class="class-meta">
+        <span>45 min</span>
+        <span>Sat / Sun</span>
+        <span>Max 15</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TRAINERS -->
+<section id="trainers">
+  <div class="trainers-header">
+    <div class="section-label">The Team</div>
+    <h2 class="section-title">MEET YOUR COACHES</h2>
+    <p class="section-sub">World-class athletes. Certified professionals. People who genuinely care about your progress.</p>
+  </div>
+  <div class="trainers-grid">
+    <div class="trainer-card">
+      <div class="trainer-photo-placeholder p1">🏋️</div>
+      <div class="trainer-info">
+        <div class="trainer-name">Marcus Reid</div>
+        <div class="trainer-role">Head Coach & Founder</div>
+        <p class="trainer-bio">Former national-level weightlifter with 12+ years of coaching experience. CrossFit Level 3 certified.</p>
+        <div class="trainer-tags">
+          <span class="trainer-tag">Olympic Lifting</span>
+          <span class="trainer-tag">Programming</span>
+          <span class="trainer-tag">Nutrition</span>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-photo-placeholder p2">⚡</div>
+      <div class="trainer-info">
+        <div class="trainer-name">Priya Nair</div>
+        <div class="trainer-role">Conditioning Specialist</div>
+        <p class="trainer-bio">Triathlete and HIIT expert with a background in sports science. Known for her high-energy MetCon sessions.</p>
+        <div class="trainer-tags">
+          <span class="trainer-tag">MetCon</span>
+          <span class="trainer-tag">Endurance</span>
+          <span class="trainer-tag">HIIT</span>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-photo-placeholder p3">🔥</div>
+      <div class="trainer-info">
+        <div class="trainer-name">Jake Torres</div>
+        <div class="trainer-role">Strength & Power Coach</div>
+        <p class="trainer-bio">Power­lifting champion turned CrossFit coach. Passionate about building strength foundations in every athlete.</p>
+        <div class="trainer-tags">
+          <span class="trainer-tag">Strength</span>
+          <span class="trainer-tag">Barbell</span>
+          <span class="trainer-tag">Foundations</span>
+        </div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-photo-placeholder p4">🧘</div>
+      <div class="trainer-info">
+        <div class="trainer-name">Sara Kim</div>
+        <div class="trainer-role">Mobility & Wellness Coach</div>
+        <p class="trainer-bio">Yoga and corrective movement specialist. Sara ensures athletes train sustainably and stay injury-free long-term.</p>
+        <div class="trainer-tags">
+          <span class="trainer-tag">Mobility</span>
+          <span class="trainer-tag">Recovery</span>
+          <span class="trainer-tag">Injury Prev.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="pricing-header">
+    <div class="section-label">Membership</div>
+    <h2 class="section-title">SIMPLE PRICING</h2>
+    <p class="section-sub">No hidden fees. No lock-in contracts. Just honest pricing for world-class training.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price"><sup>$</sup>49<span>/mo</span></div>
+      <p class="plan-desc">Perfect for those just beginning their fitness journey with us.</p>
+      <ul class="plan-features">
+        <li>8 classes per month</li>
+        <li>Foundations access</li>
+        <li>Locker room access</li>
+        <li>App tracking included</li>
+        <li class="no">Open gym access</li>
+        <li class="no">Nutrition coaching</li>
+      </ul>
+      <a href="#contact" class="btn-plan">Get Started</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="plan-name">Athlete</div>
+      <div class="plan-price"><sup>$</sup>99<span>/mo</span></div>
+      <p class="plan-desc">The full Forge experience — unlimited classes and all the extras.</p>
+      <ul class="plan-features">
+        <li>Unlimited classes</li>
+        <li>All class types included</li>
+        <li>Open gym 24/7</li>
+        <li>App + progress tracking</li>
+        <li>Monthly check-in call</li>
+        <li class="no">Nutrition coaching</li>
+      </ul>
+      <a href="#contact" class="btn-plan">Get Started</a>
+    </div>
+    <div class="pricing-card">
+      <div class="plan-name">Elite</div>
+      <div class="plan-price"><sup>$</sup>159<span>/mo</span></div>
+      <p class="plan-desc">For serious athletes who want every possible advantage and support.</p>
+      <ul class="plan-features">
+        <li>Everything in Athlete</li>
+        <li>1-on-1 coaching (2x/mo)</li>
+        <li>Custom programming</li>
+        <li>Nutrition & meal planning</li>
+        <li>Priority class booking</li>
+        <li>Performance testing</li>
+      </ul>
+      <a href="#contact" class="btn-plan">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">START YOUR<br>JOURNEY</h2>
+      <p class="section-sub">Questions? Ready to book a free trial class? Drop us a message and we'll get back to you within 24 hours.</p>
+
+      <div class="contact-info" style="margin-top: 3rem;">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Location</div>
+            <div class="contact-item-value">142 Industrial Ave, Suite 200<br>Downtown District</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-item-label">Hours</div>
+            <div class="contact-item-value">Mon–Fri: 5:30 AM – 9:30 PM<br>Sat–Sun: 7:00 AM – 5:00 PM</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-item-label">Phone & Email</div>
+            <div class="contact-item-value">+1 (555) 840-2233<br>hello@forgegym.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Alex" />
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Johnson" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="alex@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" placeholder="+1 (555) 000-0000" />
+      </div>
+      <div class="form-group">
+        <label>Interested In</label>
+        <select>
+          <option value="">Select a plan or class…</option>
+          <option>Free Trial Class</option>
+          <option>Starter Plan</option>
+          <option>Athlete Plan</option>
+          <option>Elite Plan</option>
+          <option>General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your fitness goals or any questions you have…"></textarea>
+      </div>
+      <button class="form-submit">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">FORGE</div>
+  <div class="footer-links">
+    <a href="#classes">Classes</a>
+    <a href="#trainers">Trainers</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Forge Gym. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
